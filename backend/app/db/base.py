@@ -44,5 +44,5 @@ async def create_all_tables() -> None:
     In production, prefer running: alembic upgrade head
     """
     async with engine.begin() as conn:
-        from app.db.models import user, otp  # noqa: F401 — import to register models
+        from app.db.models import user, otp, report  # noqa: F401 — import to register models
         await conn.run_sync(Base.metadata.create_all)

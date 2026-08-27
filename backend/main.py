@@ -9,9 +9,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
 from app.db.base import create_all_tables
-from app.routers import auth, users
+from app.routers import auth, users, reports, expert, officers
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -52,6 +53,11 @@ app.add_middleware(
 # ── Routers ───────────────────────────────────────────────────────────────────
 app.include_router(auth.router)
 app.include_router(users.router)
+app.include_router(reports.router)
+app.include_router(expert.router)
+app.include_router(officers.router)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # ── Health check ──────────────────────────────────────────────────────────────

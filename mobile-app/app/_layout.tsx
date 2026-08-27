@@ -11,6 +11,7 @@ import { Stack, useRouter, useSegments } from 'expo-router'
 import { View, ActivityIndicator, StatusBar } from 'react-native'
 import { AuthProvider, useAuth } from '../context/AuthContext'
 import { LanguageProvider, useLanguage } from '../context/LanguageContext'
+import { QueueProvider } from '../context/QueueContext'
 
 function AuthAndLangGate({ children }: { children: React.ReactNode }) {
   const { token, loading: authLoading } = useAuth()
@@ -56,14 +57,17 @@ export default function RootLayout() {
   return (
     <LanguageProvider>
       <AuthProvider>
-        <StatusBar barStyle="light-content" backgroundColor="#0a0f0d" />
-        <AuthAndLangGate>
-          <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#0a0f0d' } }}>
-            <Stack.Screen name="language-select" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)"          options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)"          options={{ headerShown: false }} />
-          </Stack>
-        </AuthAndLangGate>
+        <QueueProvider>
+          <StatusBar barStyle="light-content" backgroundColor="#0a0f0d" />
+          <AuthAndLangGate>
+            <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#0a0f0d' } }}>
+              <Stack.Screen name="language-select" options={{ headerShown: false }} />
+              <Stack.Screen name="(auth)"          options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)"          options={{ headerShown: false }} />
+              <Stack.Screen name="report-details"  options={{ headerShown: false }} />
+            </Stack>
+          </AuthAndLangGate>
+        </QueueProvider>
       </AuthProvider>
     </LanguageProvider>
   )

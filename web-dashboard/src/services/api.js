@@ -51,4 +51,23 @@ export const registerOfficer = (data) =>
 export const getMyProfile = () =>
   api.get('/users/me')
 
+// ── Expert API calls ───────────────────────────────────────────────────────────
+
+export const getExpertQueue = () =>
+  api.get('/expert/queue')
+
+export const validateReport = (reportId, payload) =>
+  api.post(`/expert/validate/${reportId}`, payload)
+
+export const getExpertStats = () =>
+  api.get('/expert/stats')
+
+// ── Officer API calls ──────────────────────────────────────────────────────────
+
+export const getOfficerReports = (params) =>
+  api.get('/officer/reports', { params })
+
+export const getOfficerStats = (params) =>
+  api.get('/officer/stats', { params })
+
 export default api

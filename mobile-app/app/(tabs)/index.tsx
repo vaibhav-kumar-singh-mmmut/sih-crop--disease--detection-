@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { useAuth } from '../../context/AuthContext'
 import { useLanguage } from '../../context/LanguageContext'
 import { useSpeech } from '../../hooks/useSpeech'
+import { useQueue } from '../../context/QueueContext'
 import ActionCard from '../../components/ActionCard'
 import SpeakerButton from '../../components/SpeakerButton'
 
@@ -63,6 +64,7 @@ export default function HomeScreen() {
   const { user, role, logout } = useAuth()
   const { t, language, isFirstLaunch } = useLanguage()
   const { speakScreen, stop, isSpeaking } = useSpeech()
+  const { offlineQueue } = useQueue()
   const router = useRouter()
 
   // Auto-speak home script when screen gains focus
@@ -124,13 +126,19 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
 
-        {/* ── Phase 1 complete banner ── */}
-        <View style={styles.banner}>
-          <Text style={styles.bannerIcon}>✅</Text>
+        {/* ── Status banner ── */}
+        <View style={[styles.banner, offlineQueue.length > 0 && styles.bannerWarning]}>
+          <Text style={styles.bannerIcon}>{offlineQueue.length > 0 ? "⏳" : "📸"}</Text>
           <View style={{ flex: 1 }}>
-            <Text style={styles.bannerTitle}>Auth Active</Text>
+            <Text style={[styles.bannerTitle, offlineQueue.length > 0 && { color: '#fbbf24' }]}>
+              {offlineQueue.length > 0 
+                ? (language === 'hi' ? "ऑफ़लाइन सिंक चालू है" : "Offline Sync Active")
+                : (language === 'hi' ? "फसल जांच तैयार है" : "Crop Scan Active")}
+            </Text>
             <Text style={styles.bannerSub}>
-              Tap any action below · Scan Crop launches in Phase 3
+              {offlineQueue.length > 0 
+                ? (language === 'hi' ? `${offlineQueue.length} स्कैन इंटरनेट की प्रतीक्षा कर रहे हैं` : `${offlineQueue.length} scan(s) waiting for internet to sync`)
+                : (language === 'hi' ? "अपनी फसल का फोटो खींचकर रोग की जांच करें" : "Tap 'Scan Crop' below to diagnose leaf disease")}
             </Text>
           </View>
         </View>
@@ -202,6 +210,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(74,222,128,0.07)',
     borderRadius: 16, borderWidth: 1, borderColor: 'rgba(74,222,128,0.18)',
     padding: 16, flexDirection: 'row', alignItems: 'center', gap: 14,
+  },
+  bannerWarning: {
+    backgroundColor: 'rgba(245,158,11,0.07)',
+    borderColor: 'rgba(245,158,11,0.18)',
   },
   bannerIcon:  { fontSize: 26 },
   bannerTitle: { color: '#4ade80', fontWeight: '700', fontSize: 14 },

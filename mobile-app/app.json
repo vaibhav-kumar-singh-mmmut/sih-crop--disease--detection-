@@ -35,6 +35,19 @@
         {
           "microphonePermission": "Allow Crop Health Advisory to use your microphone for voice input."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Crop Health Advisory to access your photos to select crop disease images.",
+          "cameraPermission": "Allow Crop Health Advisory to access your camera to scan crop disease leaves."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Crop Health Advisory to use your location to geotag crop scans for regional outbreak tracking."
+        }
       ]
     ],
     "experiments": {

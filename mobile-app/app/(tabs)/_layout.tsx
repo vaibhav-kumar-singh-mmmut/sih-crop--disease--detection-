@@ -7,6 +7,7 @@ import React from 'react'
 import { Tabs } from 'expo-router'
 import { Text, View } from 'react-native'
 import { useLanguage } from '../../context/LanguageContext'
+import QueueStatusBanner from '../../components/QueueStatusBanner'
 
 interface TabIconProps {
   emoji:   string
@@ -25,7 +26,9 @@ export default function TabsLayout() {
   const { t } = useLanguage()
 
   return (
-    <Tabs
+    <View style={{ flex: 1 }}>
+      <QueueStatusBanner />
+      <Tabs
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
@@ -81,5 +84,6 @@ export default function TabsLayout() {
         }}
       />
     </Tabs>
+    </View>
   )
 }

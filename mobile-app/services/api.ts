@@ -47,4 +47,13 @@ export const registerFarmer = (data: {
 
 export const getMyProfile = () => api.get('/users/me')
 
+// ── Reports helpers ────────────────────────────────────────────────────────────
+
+export const uploadReport = (formData: FormData) =>
+  api.post('/reports/', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
+
+export const getMyReports = () => api.get('/reports/')
+
 export default api
