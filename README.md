@@ -126,7 +126,7 @@ Scan the QR code with **Expo Go** on your phone.
 - **Mansi**
 - **Rishang**
 - **Swastik**
-- **Sristi**
+- **Srishti**
 - **Ankit**
 
 ---
